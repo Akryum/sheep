@@ -7,6 +7,7 @@ require('esbuild').buildSync({
   platform: 'node',
   outdir: 'dist',
   external: [
+    'chalk',
     'conventional-changelog*',
   ],
   sourcemap: true,
