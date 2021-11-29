@@ -9,8 +9,14 @@ export async function generateChangelog () {
   await fs.writeJson('package.json', pkgData, { spaces: 2 })
 
   // Generate changelog
-  await execaCommand('yarn --silent conventional-changelog -p angular -i CHANGELOG.md -s -r 2')
+  await execaCommand('yarn --silent conventional-changelog -p angular -i CHANGELOG.md -s -r 2', {
+    stdio: 'inherit',
+    shell: true,
+  })
 
   // Commit
-  await execaCommand('(git add CHANGELOG.md && git add package.json && git commit -m "chore: changelog" && git push || exit 0)')
+  await execaCommand('(git add CHANGELOG.md && git add package.json && git commit -m "chore: changelog" && git push || exit 0)', {
+    stdio: 'inherit',
+    shell: true,
+  })
 }
