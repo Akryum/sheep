@@ -24,7 +24,7 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "chalk": "^5.0.0",
+    "chalk": "^4.0.0",
     "conventional-changelog-cli": "^2.1.1"
   },
   "peerDependencies": {
