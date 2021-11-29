@@ -1,6 +1,6 @@
 {
   "name": "@akryum/gen-changelog",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Opinionated CLI command to update CHANGELOG.md",
   "license": "MIT",
   "author": {
