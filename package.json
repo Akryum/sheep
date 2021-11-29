@@ -1,6 +1,6 @@
 {
   "name": "@akryum/sheep",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Opinionated CLI command to release and update CHANGELOG.md",
   "license": "MIT",
   "author": {
