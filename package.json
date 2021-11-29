@@ -1,19 +1,19 @@
 {
-  "name": "@akryum/gen-changelog",
+  "name": "@akryum/sheep",
   "version": "0.1.1",
-  "description": "Opinionated CLI command to update CHANGELOG.md",
+  "description": "Opinionated CLI command to release and update CHANGELOG.md",
   "license": "MIT",
   "author": {
     "name": "Guillaume Chau"
   },
   "repository": {
-    "url": "https://github.com/Akryum/gen-changelog.git",
+    "url": "https://github.com/Akryum/sheep.git",
     "type": "git"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "changelog": "./dist/bin.js"
+    "sheep": "./dist/bin.js"
   },
   "publishConfig": {
     "access": "public"
@@ -26,8 +26,12 @@
   "dependencies": {
     "conventional-changelog-cli": "^2.1.1"
   },
+  "peerDependencies": {
+    "lerna": "*"
+  },
   "devDependencies": {
     "@types/node": "^14.14.21",
+    "chalk": "^5.0.0",
     "commander": "^7.0.0",
     "esbuild": "^0.14.0",
     "execa": "^6.0.0",

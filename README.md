@@ -1,9 +1,9 @@
-# gen-changelog
+# 🐑️ sheep
 
-Opinionated CLI command to update CHANGELOG.md.
+Opinionated CLI command to update CHANGELOG.md and release packages.
 
 ```bash
-yarn add -WD @akryum/gen-changelog
+yarn add -WD @akryum/sheep
 ```
 
 Assumed:
@@ -17,16 +17,20 @@ Assumed:
 - You run `lerna publish` before using it
 
 What it does:
+- Select new version
+- Update nested packages versions and workspace dependencies
 - Update the root `package.json` version
 - Update the `CHANGELOG.md` file with the latest changes
+- Publish the packages to npm
 - Push the changelog change with `chore: changelog` commit message
+- Create a `vX.Y.Z` git tag
 
 Usage:
 
 ```json
 {
   "scripts": {
-    "release": "yarn run build && yarn run test && lerna publish && changelog generate"
+    "release": "yarn run build && yarn run test && sheep release -b main"
   }
 }
 ```
