@@ -22,7 +22,7 @@ What it does:
 - Update the `CHANGELOG.md` file with the latest changes
 - Publish the packages to npm
 - Push the changes with `vX.Y.Z` commit message
-- Create a `vX.Y.Z` git tag
+- Create and push a `vX.Y.Z` git tag
 
 Usage:
 
