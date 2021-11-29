@@ -1,0 +1,38 @@
+{
+  "name": "@akryum/gen-changelog",
+  "version": "0.1.0",
+  "description": "Opinionated CLI command to update CHANGELOG.md",
+  "license": "MIT",
+  "author": {
+    "name": "Guillaume Chau"
+  },
+  "repository": {
+    "url": "https://github.com/Akryum/gen-changelog.git",
+    "type": "git"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "changelog": "./dist/bin.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rimraf dist && node esbuild.js && tsc -d --emitDeclarationOnly && chmod +x ./dist/bin.js",
+    "watch": "tsc -d -w --sourceMap",
+    "prepublishOnly": "yarn build"
+  },
+  "dependencies": {
+    "conventional-changelog-cli": "^2.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.21",
+    "commander": "^7.0.0",
+    "esbuild": "^0.14.0",
+    "execa": "^6.0.0",
+    "fs-extra": "^10.0.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.1.3"
+  }
+}
