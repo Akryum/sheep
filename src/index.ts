@@ -56,6 +56,11 @@ export async function release (options) {
     shell: true,
   })
 
+  if (!(await execa('git', ['status', '--porcelain'], { stdio: 'pipe', shell: true })).stdout) {
+    // Canceled
+    return
+  }
+
   // Update root package.json version
   console.log('Updating root package.json version...')
   const lernaConfig = await fs.readJson('lerna.json')
