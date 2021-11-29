@@ -57,7 +57,7 @@ export async function release (options: ReleaseOptions) {
   }
 
   // Select new version
-  console.log('Selecting new version...')
+  console.log(chalk.blue('Selecting new version...'))
   await execaCommand('yarn --silent lerna version --no-git-tag-version', {
     stdio: 'inherit',
     shell: true,
@@ -69,14 +69,14 @@ export async function release (options: ReleaseOptions) {
   }
 
   // Update root package.json version
-  console.log('Updating root package.json version...')
+  console.log(chalk.blue('Updating root package.json version...'))
   const lernaConfig = await fs.readJson('lerna.json')
   const pkgData = await fs.readJson('package.json')
   pkgData.version = lernaConfig.version
   await fs.writeJson('package.json', pkgData, { spaces: 2 })
 
   // Generate changelog
-  console.log('Updating changelog...')
+  console.log(chalk.blue('Updating changelog...'))
   await execa('yarn', [
       '--silent',
       'conventional-changelog',
@@ -88,7 +88,7 @@ export async function release (options: ReleaseOptions) {
   })
 
   // Publish packages
-  console.log('Publishing packages...')
+  console.log(chalk.blue('Publishing packages...'))
   if (!options.dryRun) {
     // Use npm for auth
     await execa('npm', [
@@ -101,6 +101,7 @@ export async function release (options: ReleaseOptions) {
       shell: true,
     })
   } else {
+    console.log(chalk.gray('(Dry run) Will execute:'))
     console.log('npm', 
       'x', '--',
       'lerna', 'publish',
@@ -110,7 +111,7 @@ export async function release (options: ReleaseOptions) {
   }
 
   // Commit
-  console.log('Creating commit...')
+  console.log(chalk.blue('Creating commit...'))
   await execaCommand(`git add . && git commit -m "v${pkgData.version}"`, {
     stdio: 'inherit',
     shell: true,
@@ -123,7 +124,7 @@ export async function release (options: ReleaseOptions) {
   }
 
   // Git tag
-  console.log('Creating git tag...')
+  console.log(chalk.blue('Creating git tag...'))
   await execaCommand(`git tag v${pkgData.version}`, {
     stdio: 'inherit',
     shell: true,
