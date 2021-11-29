@@ -10,6 +10,7 @@ program.command('release')
   .option('--preset <preset>', 'Conventional changelog preset', 'angular')
   .option('--dist-tag <tag>', 'Specify a dist-tag for publishing')
   .option('-b,--expected-branch <branch>', 'Checks the expected branch for the publishing')
+  .option('--dry-run', `Dry run (change files but don't publish nor push anything`)
   .action(release)
 
 program.parse()

@@ -2,7 +2,14 @@ import fs from 'fs-extra'
 import { execaCommand, execa } from 'execa'
 import chalk from 'chalk'
 
-export async function release (options) {
+export interface ReleaseOptions {
+  preset?: string
+  distTag?: string
+  expectedBranch?: string
+  dryRun?: boolean
+}
+
+export async function release (options: ReleaseOptions) {
   // Check is repo clean
   const isDirtyGit = !!(
     await execa('git', ['status', '--porcelain'], { stdio: 'pipe', shell: true })
@@ -82,30 +89,54 @@ export async function release (options) {
 
   // Publish packages
   console.log('Publishing packages...')
-  // Use npm for auth
-  await execa('npm', [
-    'x', '--',
-    'lerna', 'publish',
-    'from-package', '--no-git-reset',
-    ...(options.distTag ? ['--dist-tag', options.distTag] : []),
-  ], {
-    stdio: 'inherit',
-    shell: true,
-  })
+  if (!options.dryRun) {
+    // Use npm for auth
+    await execa('npm', [
+      'x', '--',
+      'lerna', 'publish',
+      'from-package', '--no-git-reset',
+      ...(options.distTag ? ['--dist-tag', options.distTag] : []),
+    ], {
+      stdio: 'inherit',
+      shell: true,
+    })
+  } else {
+    console.log('npm', 
+      'x', '--',
+      'lerna', 'publish',
+      'from-package', '--no-git-reset',
+      ...(options.distTag ? ['--dist-tag', options.distTag] : []),
+    )
+  }
 
   // Commit
   console.log('Creating commit...')
-  await execaCommand(`git add . && git commit -m "v${pkgData.version}" && git push`, {
+  await execaCommand(`git add . && git commit -m "v${pkgData.version}"`, {
     stdio: 'inherit',
     shell: true,
   })
+  if (!options.dryRun) {
+    await execaCommand('git push', {
+      stdio: 'inherit',
+      shell: true,
+    })
+  }
 
   // Git tag
   console.log('Creating git tag...')
-  await execaCommand(`git tag v${pkgData.version} && git push --tags`, {
+  await execaCommand(`git tag v${pkgData.version}`, {
     stdio: 'inherit',
     shell: true,
   })
+  if (!options.dryRun) {
+    await execaCommand('git push --tags', {
+      stdio: 'inherit',
+      shell: true,
+    })
+  }
 
   console.log(chalk.green(`Successfully released v${pkgData.version}! 🐑️`))
+  if (options.dryRun) {
+    console.log(chalk.yellow(`Dry run. No packages were published to npm. No commits and tags where pushed. Please undo last commit and delete last tag locally before trying a new release.`))
+  }
 }
