@@ -9,6 +9,7 @@ yarn add -WD @akryum/gen-changelog
 Assumed:
 - Git repository
 - Monorepo
+- Uses yarn v1
 - Lerna setup
 - Tags with `vX.Y.Z` format
 - All tags are fetched locally
