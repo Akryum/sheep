@@ -21,7 +21,7 @@ What it does:
 - Update the root `package.json` version
 - Update the `CHANGELOG.md` file with the latest changes
 - Publish the packages to npm
-- Push the changelog change with `chore: changelog` commit message
+- Push the changelog change with `vX.Y.Z` commit message
 - Create a `vX.Y.Z` git tag
 
 Usage:
