@@ -33,3 +33,5 @@ Usage:
   }
 }
 ```
+
+Recommended compagnon GitHub Action: [Akryum/release-tag](https://github.com/Akryum/release-tag) :ok_hand:
