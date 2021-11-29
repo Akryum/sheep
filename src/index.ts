@@ -46,7 +46,7 @@ export async function release (options) {
       return
     }
   } else {
-    console.warn(chalk.yellow(`It's recommended to specify an exepected branch for the release with the -b argument.`))
+    console.warn(chalk.yellow(`It's recommended to specify an expected branch for the release with the -b argument.`))
   }
 
   // Select new version
