@@ -12,7 +12,7 @@ Assumed:
 - Uses pnpm
 - Tags with `vX.Y.Z` format
 - All tags are fetched locally
-- `CHANGELOG.md` exists (init it with `yarn conventional-changelog -p angular -o CHANGELOG.md -r 0`)
+- `CHANGELOG.md` exists (init it with `pnpm exec conventional-changelog -p angular -o CHANGELOG.md -r 0`)
 
 What it does:
 - Select new version
