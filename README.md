@@ -9,8 +9,7 @@ yarn add -WD @akryum/sheep
 Assumed:
 - Git repository
 - Monorepo
-- Uses yarn v1
-- Lerna setup
+- Uses pnpm
 - Tags with `vX.Y.Z` format
 - All tags are fetched locally
 - `CHANGELOG.md` exists (init it with `yarn conventional-changelog -p angular -o CHANGELOG.md -r 0`)
@@ -29,7 +28,7 @@ Usage:
 ```json
 {
   "scripts": {
-    "release": "yarn run build && yarn run test && sheep release -b main"
+    "release": "pnpm run link && pnpm run build && pnpm run test && sheep release -b main"
   }
 }
 ```
