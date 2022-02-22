@@ -1,42 +1,54 @@
 {
   "name": "@akryum/sheep",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Opinionated CLI command to release and update CHANGELOG.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Akryum/sheep.git"
+  },
   "license": "MIT",
   "author": {
     "name": "Guillaume Chau"
   },
-  "repository": {
-    "url": "https://github.com/Akryum/sheep.git",
-    "type": "git"
-  },
+  "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "sheep": "./dist/bin.js"
+    "sheep": "./bin.js"
+  },
+  "scripts": {
+    "build": "rimraf dist && rollup -c && chmod +x ./bin.js",
+    "prepublishOnly": "pnpm run build",
+    "watch": "rollup -c --watch"
+  },
+  "dependencies": {
+    "conventional-changelog-cli": "^2.1.1"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.1.3",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-json": "^4.1.0",
+    "@types/cross-spawn": "^6.0.2",
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^14.14.21",
+    "@types/prompts": "^2.0.14",
+    "@types/semver": "^7.3.9",
+    "esbuild": "^0.14.0",
+    "execa": "^6.1.0",
+    "fast-glob": "^3.2.11",
+    "fs-extra": "^10.0.0",
+    "pathe": "^0.2.0",
+    "picocolors": "^1.0.0",
+    "prompts": "^2.4.2",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.68.0",
+    "rollup-plugin-dts": "^4.1.0",
+    "rollup-plugin-esbuild": "^4.8.2",
+    "sade": "^1.8.1",
+    "semver": "^7.3.5",
+    "typescript": "^4.1.3"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "scripts": {
-    "build": "rimraf dist && node esbuild.js && tsc -d --emitDeclarationOnly && chmod +x ./dist/bin.js",
-    "watch": "tsc -d -w --sourceMap",
-    "prepublishOnly": "yarn build"
-  },
-  "dependencies": {
-    "chalk": "^4.0.0",
-    "conventional-changelog-cli": "^2.1.1"
-  },
-  "peerDependencies": {
-    "lerna": "*"
-  },
-  "devDependencies": {
-    "@types/node": "^14.14.21",
-    "commander": "^7.0.0",
-    "esbuild": "^0.14.0",
-    "execa": "^6.0.0",
-    "fs-extra": "^10.0.0",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.1.3"
   }
 }
