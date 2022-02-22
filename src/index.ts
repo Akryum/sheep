@@ -160,9 +160,14 @@ export async function release (options: ReleaseOptions) {
       stdio: 'inherit',
       shell: true,
     })
+    await execaCommand('git push', {
+      stdio: 'inherit',
+      shell: true,
+    })
   } else {
     console.log(pc.gray('(Dry run) Will execute:'))
     console.log(`git add . && git commit -m "v${newVersion}"`)
+    console.log('git push')
   }
 
   // Git tag
