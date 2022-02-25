@@ -3,7 +3,7 @@
 Opinionated CLI command to update CHANGELOG.md and release packages.
 
 ```bash
-yarn add -WD @akryum/sheep
+pnpm add -WD @akryum/sheep
 ```
 
 Assumed:
