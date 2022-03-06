@@ -88,7 +88,7 @@ export async function release (options: ReleaseOptions) {
       if (p.hasChanges && p.version !== newVersion) {
         p.version = p.pkg.version = newVersion
         console.log(pc.yellow(`${p.name} => ${newVersion}`))
-        updateDepVersion(p, newVersion)
+        bumpDepsVersion(p, newVersion)
       }
     }
   } else {
@@ -201,6 +201,7 @@ interface Package {
   pkg: any
   hasChanges: boolean
   deps: Package[]
+  parents: Package[]
 }
 
 async function getPackages(): Promise<Package[]> {
@@ -223,7 +224,8 @@ async function getPackages(): Promise<Package[]> {
           version: pkg.version,
           pkg,
           hasChanges: await hasPackageChanged(folder, lastTag),
-          deps: []
+          deps: [],
+          parents: [],
         }
       }
     })
@@ -255,15 +257,24 @@ async function hasPackageChanged (folder: string, lastTag: string) {
 async function buildDependencyGraph (packages: Package[]) {
   for (const p of packages) {
     p.deps = packages.filter(other => p.pkg.dependencies?.[other.name] || p.pkg.peerDependencies?.[other.name])
+    p.parents = packages.filter(other => other.pkg.dependencies?.[p.name] || other.pkg.peerDependencies?.[p.name])
   }
 }
 
-function updateDepVersion (p: Package, newVersion: string) {
+function bumpDepsVersion (p: Package, newVersion: string) {
   for (const d of p.deps) {
     if (d.version !== newVersion) {
       d.version = d.pkg.version = newVersion
       console.log(pc.yellow(`${d.name} => ${newVersion}`))
-      updateDepVersion(d, newVersion)
+      bumpDepsVersion(d, newVersion)
+    }
+  }
+
+  for (const parent of p.parents) {
+    if (parent.version !== newVersion) {
+      parent.version = parent.pkg.version = newVersion
+      console.log(pc.yellow(`${parent.name} => ${newVersion}`))
+      bumpDepsVersion(parent, newVersion)
     }
   }
 }
