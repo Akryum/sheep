@@ -2,6 +2,13 @@
   "name": "@akryum/sheep",
   "version": "0.5.2",
   "description": "Opinionated CLI command to release and update CHANGELOG.md",
+  "keywords": [
+    "cli",
+    "release",
+    "changelog",
+    "monorepo",
+    "pnpm"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Akryum/sheep.git"
@@ -13,30 +20,42 @@
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "bin": {
     "sheep": "./bin.js"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "scripts": {
     "build": "rimraf dist && rollup -c && chmod +x ./bin.js",
     "watch": "rollup -c --watch",
-    "release": "pnpm run build && node ./dist/bin.js release -b main"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc",
+    "release": "pnpm run build && pnpm run test && node ./dist/bin.js release -b main"
   },
   "dependencies": {},
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-json": "^6.1.0",
-    "@types/cross-spawn": "^6.0.2",
-    "@types/fs-extra": "^9.0.13",
-    "@types/node": "^14.14.21",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.11.30",
     "@types/prompts": "^2.0.14",
-    "@types/semver": "^7.3.9",
+    "@types/semver": "^7.5.8",
     "changelogen": "^0.5.5",
     "esbuild": "^0.19.11",
     "execa": "^6.1.0",
     "fast-glob": "^3.2.11",
-    "fs-extra": "^10.0.0",
-    "pathe": "^0.2.0",
+    "fs-extra": "^11.2.0",
+    "pathe": "^1.1.2",
     "picocolors": "^1.0.0",
     "prompts": "^2.4.2",
     "rimraf": "^3.0.2",
@@ -44,8 +63,9 @@
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-esbuild": "^6.1.0",
     "sade": "^1.8.1",
-    "semver": "^7.3.5",
-    "typescript": "^4.1.3"
+    "semver": "^7.6.0",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
   },
   "publishConfig": {
     "access": "public"

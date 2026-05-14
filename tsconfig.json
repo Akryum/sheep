@@ -2,16 +2,13 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "node",
-    "outDir": "dist",
+    "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "removeComments": false,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "sourceMap": false,
     "preserveWatchOutput": true,
     // Strict
@@ -20,12 +17,11 @@
     "alwaysStrict": true,
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
-    "rootDir": "src"
+    "lib": ["ESNext", "DOM"],
+    // rollup-plugin-esbuild handles the actual build; tsc is only used for
+    // type-checking via `pnpm run typecheck`.
+    "noEmit": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }

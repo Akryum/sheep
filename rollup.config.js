@@ -1,10 +1,12 @@
-import esbuild from 'rollup-plugin-esbuild'
-import dts from 'rollup-plugin-dts'
-import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
+import resolve from '@rollup/plugin-node-resolve'
+import dts from 'rollup-plugin-dts'
+import esbuild from 'rollup-plugin-esbuild'
 
-import pkg from './package.json' assert { type: 'json' }
+// `with { type: 'json' }` is the standard import-attribute syntax (replaces
+// the deprecated `assert { type: 'json' }`). Supported by Node 20+ and TS 5.3+.
+import pkg from './package.json' with { type: 'json' }
 
 const entries = [
   'src/index.ts',
@@ -15,23 +17,22 @@ const dtsEntries = [
   'src/index.ts',
 ]
 
+// Anything declared as a runtime dependency is treated as external so it
+// isn't bundled into the output. Everything else (currently all CLI deps,
+// which live in devDependencies) is bundled.
 const external = [
   ...Object.keys(pkg.dependencies ?? {}),
   ...Object.keys(pkg.peerDependencies ?? {}),
 ]
 
 const plugins = [
-  resolve({
-    preferBuiltins: true,
-  }),
+  resolve({ preferBuiltins: true }),
   json(),
   commonjs(),
-  esbuild({
-    target: 'node20',
-  }),
+  esbuild({ target: 'node20' }),
 ]
 
-export default ({ watch }) => [
+export default () => [
   {
     input: entries,
     output: {
@@ -41,10 +42,12 @@ export default ({ watch }) => [
     },
     external,
     plugins,
-    onwarn(message) {
-      if (/Circular dependencies/.test(message))
-        return
-      console.error(message)
+    onwarn(warning) {
+      // Rollup passes a RollupLog object whose string coercion is `[object
+      // Object]`; the readable text lives on `.message`. Silence the noisy
+      // circular-dep warnings coming from third-party deps we don't control.
+      if (warning.code === 'CIRCULAR_DEPENDENCY') return
+      console.error(warning.message ?? warning)
     },
   },
   ...dtsEntries.map(input => ({
@@ -54,8 +57,6 @@ export default ({ watch }) => [
       format: 'esm',
     },
     external,
-    plugins: [
-      dts({ respectExternal: true }),
-    ],
+    plugins: [dts({ respectExternal: true })],
   })),
 ]
