@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.6.0
+
+[compare changes](https://github.com/Akryum/sheep/compare/v0.5.2...v0.6.0)
+
+### 💅 Refactors
+
+- Modularize release workflow and bug fixes ([8e334e8](https://github.com/Akryum/sheep/commit/8e334e8))
+- Migrate to rolldown ([be755cf](https://github.com/Akryum/sheep/commit/be755cf))
+
+### 🏡 Chore
+
+- Cleanup ([995adb1](https://github.com/Akryum/sheep/commit/995adb1))
+- Update pnpm ([323aaa0](https://github.com/Akryum/sheep/commit/323aaa0))
+
+### ❤️ Contributors
+
+- Guillaume Chau ([@Akryum](http://github.com/Akryum))
+
 ## v0.5.2
 
 [compare changes](https://github.com/Akryum/sheep/compare/v0.5.1...v0.5.2)
