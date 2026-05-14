@@ -18,8 +18,8 @@
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
     "lib": ["ESNext", "DOM"],
-    // rollup-plugin-esbuild handles the actual build; tsc is only used for
-    // type-checking via `pnpm run typecheck`.
+    // tsdown handles the actual build; tsc is only used for type-checking
+    // via `pnpm run typecheck`.
     "noEmit": true
   },
   "include": ["src/**/*"],
