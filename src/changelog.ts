@@ -1,11 +1,11 @@
 import { existsSync, promises as fsp } from 'node:fs'
 import {
   generateMarkDown,
-  getGitDiff,
   loadChangelogConfig,
   parseCommits,
 } from 'changelogen'
 import path from 'pathe'
+import { getGitDiff } from './release/git-diff'
 
 /** Regex that matches the first `##` or `###` heading in CHANGELOG.md, i.e. the most recent entry. */
 const ENTRY_HEADING_RE = /^###?\s+.*$/m
@@ -28,7 +28,11 @@ export async function generateChangelog(cwd: string, newVersion: string): Promis
   const config = await loadChangelogConfig(cwd, { newVersion })
   const output = path.resolve(cwd, 'CHANGELOG.md')
 
-  const rawCommits = await getGitDiff(config.from, config.to)
+  // Use our local `getGitDiff` (not changelogen's) so a missing `config.from`
+  // — the typical case on a first release with no prior tags — doesn't blow
+  // through Node's default 1 MiB `execSync` buffer when scanning the full
+  // history. See `src/release/git-diff.ts` for details.
+  const rawCommits = await getGitDiff(config.from, config.to, cwd)
 
   // Keep only commits whose type is configured, and drop dependency-bump chores
   // (which aren't user-visible) unless they're flagged as breaking changes.
