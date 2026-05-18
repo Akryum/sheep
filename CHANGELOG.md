@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v0.6.1
+
+[compare changes](https://github.com/Akryum/sheep/compare/v0.5.2...v0.6.1)
+
+### 🩹 Fixes
+
+- Recognize -b flag and avoid ENOBUFS on first release ([853c25a](https://github.com/Akryum/sheep/commit/853c25a))
+
+### 💅 Refactors
+
+- Modularize release workflow and bug fixes ([8e334e8](https://github.com/Akryum/sheep/commit/8e334e8))
+- Migrate to rolldown ([be755cf](https://github.com/Akryum/sheep/commit/be755cf))
+
+### 🏡 Chore
+
+- Cleanup ([995adb1](https://github.com/Akryum/sheep/commit/995adb1))
+- Update pnpm ([323aaa0](https://github.com/Akryum/sheep/commit/323aaa0))
+
+### ❤️ Contributors
+
+- Guillaume Chau ([@Akryum](http://github.com/Akryum))
+
 ## v0.6.0
 
 [compare changes](https://github.com/Akryum/sheep/compare/v0.5.2...v0.6.0)
